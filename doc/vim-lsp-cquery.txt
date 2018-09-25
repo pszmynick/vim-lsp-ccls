@@ -1,18 +1,18 @@
-*vim-lsp-cquery* Language server protocol extensions for cquery.
+*vim-lsp-ccls* Language server protocol extensions for ccls.
 
 ====================================================================
-CONTENTS                                   *vim-lsp-cquery-contents*
+CONTENTS                                   *vim-lsp-ccls-contents*
 
-    1. Overwiev............|vim-lsp-cquery-overview|
-    2. Usage...............|vim-lsp-cquery-usage|
-    3. Commands............|vim-lsp-cquery-commands|
-    4. Mappings............|vim-lsp-cquery-mappings|
-    5. License.............|vim-lsp-cquery-license|
+    1. Overwiev............|vim-lsp-ccls-overview|
+    2. Usage...............|vim-lsp-ccls-usage|
+    3. Commands............|vim-lsp-ccls-commands|
+    4. Mappings............|vim-lsp-ccls-mappings|
+    5. License.............|vim-lsp-ccls-license|
 
 ====================================================================
-Overwiev                                   *vim-lsp-cquery-overview*
+Overwiev                                   *vim-lsp-ccls-overview*
 
-This plugin provides support for some cquery commands that are 
+This plugin provides support for some ccls commands that are 
 extensions to language server protocol and thus can not be 
 implemented in vim-lsp directly. However this commands are usefull 
 for c++ development and understanding existing c++ code bases. 
@@ -22,61 +22,61 @@ inherit this class, all classes that are bases of this class and a
 list of all instances of a user defined class.
 
 ====================================================================
-Usage                                         *vim-lsp-cquery-usage*
+Usage                                         *vim-lsp-ccls-usage*
 
-To use vim-lsp-cquery, first install vim-lsp plugin and all it's 
+To use vim-lsp-ccls, first install vim-lsp plugin and all it's 
 dependencies. Use your package manager of choise. For example,
 with vim-plug add this lines to your vimrc:
 
     Plug 'prabirshrestha/async.vim'
     Plug 'prabirshrestha/vim-lsp'
-    Plug 'pdavydov108/vim-lsp-cquery'
+    Plug 'JanValiska/vim-lsp-ccls'
 
-Install cquery language server and setup your project as described 
-here: https://github.com/cquery-project/cquery/wiki/Getting-started
-Usually, this boils down to installing cquery itself (they provide
+Install ccls language server and setup your project as described 
+here: https://github.com/MaskRay/ccls/wiki/Getting-started
+Usually, this boils down to installing ccls itself (they provide
 binary releases), and getting compile_commands.json file from 
 your build system of choise. In case of cmake, just add
 -DCMAKE_EXPORT_COMPILE_COMMANDS=On to the command line. Also, if 
 you have a separate directory where you build a project (like build 
 dir), then compile_commands.json file will be generated there, so 
 maybe it's a good idea to create a symbolic link to it from the root 
-of your project, so that cquery can detect it.
-Make vim-lsp plugin use cquery server, see here:
-https://github.com/prabirshrestha/vim-lsp/wiki/Servers-cquery
-After this steps, vim-lsp-cquery server will be ready to roll. It 
+of your project, so that ccls can detect it.
+Make vim-lsp plugin use ccls server, see here:
+https://github.com/MaskRay/ccls/wiki/vim-lsp
+After this steps, vim-lsp-ccls server will be ready to roll. It 
 will define a few additional commands, but no mappings, so please 
 add them if you like.
 
 ====================================================================
-Commands                                   *vim-lsp-cquery-commands*
+Commands                                   *vim-lsp-ccls-commands*
 
 Currently, there are three commands defined by this plugin. These 
-are: LspCqueryDerived, LspCqueryBase, LspCqueryVars.
-1. LspCqueryDerived - when used on a virtual function, will populate
+are: LspCclsDerived, LspCclsBase, LspCclsVars.
+1. LspCclsDerived - when used on a virtual function, will populate
 quickfix window with the locations of virtual functions that 
 override this one. When used on a class, will show a list of all 
 classes that inherit this one.
-2. LspCqueryBase - when used on a class, will return a list of all 
+2. LspCclsBase - when used on a class, will return a list of all 
 its parent classes.
-3. LspCqueryVars - when used on a user defined class, will show a 
+3. LspCclsVars - when used on a user defined class, will show a 
 list of locations of all variables that are instances of this type.
 
 ====================================================================
-Mappings                                   *vim-lsp-cquery-mappings*
+Mappings                                   *vim-lsp-ccls-mappings*
 
 This plugin does not define any mappings.  However, it is trivial 
 to define your own. For example like so:
 
-    autocmd FileType c,cc,cpp,cxx,h,hpp nnoremap <leader>fv :LspCqueryDerived<CR>
-    autocmd FileType c,cc,cpp,cxx,h,hpp nnoremap <leader>fc :LspCqueryCallers<CR>
-    autocmd FileType c,cc,cpp,cxx,h,hpp nnoremap <leader>fb :LspCqueryBase<CR>
-    autocmd FileType c,cc,cpp,cxx,h,hpp nnoremap <leader>fi :LspCqueryVars<CR>
+    autocmd FileType c,cc,cpp,cxx,h,hpp nnoremap <leader>fv :LspCclsDerived<CR>
+    autocmd FileType c,cc,cpp,cxx,h,hpp nnoremap <leader>fc :LspCclsCallers<CR>
+    autocmd FileType c,cc,cpp,cxx,h,hpp nnoremap <leader>fb :LspCclsBase<CR>
+    autocmd FileType c,cc,cpp,cxx,h,hpp nnoremap <leader>fi :LspCclsVars<CR>
 
 ====================================================================
-License                                     *vim-lsp-cquery-license*
+License                                     *vim-lsp-ccls-license*
 
-vim-lsp-cquery uses a lot of code from vim-lsp, so it has the same
+vim-lsp-ccls uses a lot of code from vim-lsp, so it has the same
 license as the original plugin.
 
 The MIT License (MIT)
