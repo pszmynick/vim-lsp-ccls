@@ -24,7 +24,7 @@ function! s:request(method) abort
     echom 'Retrieving derived objects...'
 endfunction
 
-function! s:inheritance(derived) abort
+function! s:inheritance(derivedType) abort
     let l:server_names = lsp#get_server_names()
 
     if len(l:server_names) == 0 || count(l:server_names, 'ccls') == 0
@@ -39,22 +39,22 @@ function! s:inheritance(derived) abort
     call lsp#send_request('ccls', {
         \ 'method': '$ccls/inheritance',
         \ 'params': {
-        \   'derived': derived,
+        \   'derived': a:derivedType,
         \   'textDocument': lsp#get_text_document_identifier(),
         \   'position': lsp#get_position(),
         \ },
         \ 'on_notification': function('s:handle_location', [l:ctx, 'ccls', 'definition']),
         \ })
 
-    echom 'Retrieving derived objects...'
+    echom 'Retrieving references objects...'
 endfunction
 
 function! ccls#references#derived() abort
-    call s:inheritance(1)
+    call s:inheritance(v:true)
 endfunction
 
 function! ccls#references#base() abort
-    call s:inheritance(0)
+    call s:inheritance(v:false)
 endfunction
 
 function! ccls#references#vars() abort
@@ -81,7 +81,8 @@ function! s:handle_location(ctx, server, type, data) abort "ctx = {counter, list
     if lsp#client#is_error(a:data['response'])
         call s:error_msg('Failed to retrieve '. a:type . ' for ' . a:server)
     else
-        let a:ctx['list'] = a:ctx['list'] + lsp#ui#vim#utils#locations_to_loc_list(a:data)
+        let a:ctx['list'] = a:ctx['list'] + lsp#utils#location#_lsp_to_vim_list(a:data['response']['result'])
+        "lsp#ui#vim#utils#locations_to_loc_list(a:data)
     endif
 
     if a:ctx['counter'] == 0
